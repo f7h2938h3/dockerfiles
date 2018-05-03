@@ -19,10 +19,8 @@ RUN pip install mcstatus
 
 HEALTHCHECK CMD mcstatus localhost ping
 
-RUN addgroup -g 1000 minecraft \
-  && adduser -Ss /bin/false -u 1000 -G minecraft -h /home/minecraft minecraft \
-  && mkdir -m 777 /data /mods /config /plugins \
-  && chown minecraft:minecraft /data /config /mods /plugins /home/minecraft
+RUN mkdir -m 777 /data /mods /config /plugins \
+  && chown root:root /data /config /mods /plugins
 
 EXPOSE 25565 25575
 
@@ -43,5 +41,3 @@ ENV JVM_XX_OPTS="-XX:+UseG1GC" MEMORY="1G" \
     LEVEL_TYPE=DEFAULT GENERATOR_SETTINGS= WORLD= MODPACK= SERVER_PORT=25565 ONLINE_MODE=TRUE CONSOLE=true
 
 COPY start* /
-
-USER minecraft
